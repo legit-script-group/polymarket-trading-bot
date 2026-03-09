@@ -1,0 +1,57 @@
+{
+  "token_ids": [
+    "108547978327958467449318042977006580876058560639743186491243488736783119648127",
+    "61476326573463890939120700176570456436619008823217970387484180237661307640203"
+  ],
+  "market_slug": "microstrategy-sells-any-bitcoin-by-march-31-2026",
+  "_comment": "Example: MicroStrategy sells any Bitcoin by March 31, 2026? (Yes/No). Replace with any market from polymarket.com or gamma-api.polymarket.com/events.",
+  "poll_interval_seconds": 2.0,
+  "capital": 1000,
+  "risk_per_trade": 0.02,
+  "max_trade_pct": 0.02,
+  "max_market_exposure": 0.1,
+  "daily_loss_limit_pct": 0.05,
+  "position_stop_loss_pct": 0.1,
+  "position_take_profit_pct": 0.2,
+  "kill_switch_loss_pct": 0.08,
+  "enable_strategies": [
+    "probability_mispricing",
+    "arbitrage",
+    "momentum",
+    "mean_reversion",
+    "liquidity_provision"
+  ],
+  "strategy_params": {
+    "probability_mispricing": {
+      "fair_value_edge_min": 0.03,
+      "min_volume": 100
+    },
+    "arbitrage": {
+      "min_spread_bps": 50,
+      "max_spread_bps": 500
+    },
+    "momentum": {
+      "lookback_seconds": 300,
+      "momentum_threshold": 0.02
+    },
+    "mean_reversion": {
+      "lookback_seconds": 600,
+      "z_score_entry": 2.0,
+      "z_score_exit": 0.5
+    },
+    "liquidity_provision": {
+      "spread_bps": 20,
+      "inventory_limit_pct": 0.3,
+      "order_refresh_seconds": 30
+    }
+  },
+  "execution": {
+    "slippage_bps": 10,
+    "partial_fill_ok": true,
+    "order_timeout_seconds": 30
+  },
+  "api": {
+    "host": "https://clob.polymarket.com",
+    "chain_id": 137
+  }
+}
