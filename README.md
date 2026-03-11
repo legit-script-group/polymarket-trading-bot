@@ -3,6 +3,29 @@
 Professional automated trading system for Polymarket prediction markets. Modular TypeScript architecture with multiple strategies, risk management, execution controls, and backtesting.
 
 
+### Example runs (custom strategy)
+
+Example results from running the bot with different sizes (your own strategy and config):
+
+| Starting balance | Per-trade size | Profit (example run) |
+|------------------|----------------|----------------------|
+| $100             | $10            | ~$40                 |
+| $500             | $50            | ~$300                |
+| $1,000           | $100           | ~$500                |
+
+Results depend on market conditions, strategy, and config; the bot often logs “Entry window passed, no position” when it doesn’t find a trade in that 5m window.
+
+## Strategies
+
+| Strategy | Description |
+|----------|-------------|
+| **probability_mispricing** | Buy when market prob < fair value, sell when > fair value. |
+| **arbitrage** | Wide spread: place orders inside the spread. |
+| **momentum** | Short-term trend: buy on upward move, sell on downward. |
+| **mean_reversion** | Trade when price deviates from recent average (z-score). |
+| **liquidity_provision** | Market making around mid with inventory limits. |
+
+
 ## How to Run the Project
 
 ### Prerequisites
@@ -60,28 +83,6 @@ Or with your own history CSV (columns: `timestamp`, `token_id`, `bid`, `ask`, `m
 ```bash
 npx tsx src/run_backtest.ts path/to/history.csv
 ```
-
-### Example runs (custom strategy)
-
-Example results from running the bot with different sizes (your own strategy and config):
-
-| Starting balance | Per-trade size | Profit (example run) |
-|------------------|----------------|----------------------|
-| $100             | $10            | ~$40                 |
-| $500             | $50            | ~$300                |
-| $1,000           | $100           | ~$500                |
-
-Results depend on market conditions, strategy, and config; the bot often logs “Entry window passed, no position” when it doesn’t find a trade in that 5m window.
-
-## Strategies
-
-| Strategy | Description |
-|----------|-------------|
-| **probability_mispricing** | Buy when market prob < fair value, sell when > fair value. |
-| **arbitrage** | Wide spread: place orders inside the spread. |
-| **momentum** | Short-term trend: buy on upward move, sell on downward. |
-| **mean_reversion** | Trade when price deviates from recent average (z-score). |
-| **liquidity_provision** | Market making around mid with inventory limits. |
 
 Enable/disable in `config.json` → `enable_strategies`.
 
