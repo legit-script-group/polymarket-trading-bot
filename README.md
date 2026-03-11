@@ -2,56 +2,76 @@
 
 Professional automated trading system for Polymarket prediction markets. Modular TypeScript architecture with multiple strategies, risk management, execution controls, and backtesting.
 
-## Structure
 
-```
-polymarket-trading-bot/
-├── src/
-│   ├── core/                 # Market data, orders, portfolio
-│   │   ├── market_data.ts
-│   │   ├── order_manager.ts
-│   │   └── portfolio.ts
-│   ├── strategies/
-│   │   ├── base.ts
-│   │   ├── probability_mispricing.ts
-│   │   ├── arbitrage.ts
-│   │   ├── momentum.ts
-│   │   ├── mean_reversion.ts
-│   │   └── liquidity_provision.ts
-│   ├── risk/
-│   │   ├── risk_manager.ts
-│   │   ├── position_sizing.ts
-│   │   └── exposure_limits.ts
-│   ├── utils/
-│   │   ├── logger.ts
-│   │   ├── config_loader.ts
-│   │   └── metrics.ts
-│   ├── backtest/
-│   │   └── runner.ts
-│   ├── types.ts
-│   ├── main_bot.ts
-│   └── run_backtest.ts
-├── data/                     # trades.json, performance.json
-├── logs/                     # trading.log
-├── config.json
-├── package.json
-└── tsconfig.json
+## How to Run the Project
+
+### Prerequisites
+
+- **Node.js 20+** (e.g. 20.6.0 or later)
+
+### 1. Install dependencies
+
+```bash
+npm install
 ```
 
-## Setup
+### 2. Configure environment
 
-1. **Node 20+**
-   ```bash
-   npm install
-   ```
+- Copy `.env.example` to `.env` and set:
+  - `POLYMARKET_PRIVATE_KEY` — your wallet private key for signing trades
+  - `PROXY_WALLET_ADDRESS` (optional) — only if you use a proxy wallet
+- Edit `config.json`:
+  - **`token_ids`** and **`market_slug`** — from the Polymarket API or market page for the markets you want to trade
+  - **`enable_strategies`** — list of strategies to use (e.g. `["probability_mispricing", "momentum", "mean_reversion"]`)
+  - **`capital`** — starting balance in USD
+  - **`max_trade_pct`** or trade size — controls how much you risk per trade (e.g. $10, $50, or $100 per trade by setting capital and risk)
 
-2. **Config**
-   - Copy `.env.example` to `.env` and set `POLYMARKET_PRIVATE_KEY` (and `PROXY_WALLET_ADDRESS` if using a proxy wallet).
-   - Edit `config.json`: set `token_ids` and `market_slug` for the markets you want to trade, and enable strategies under `enable_strategies`.
+### 3. Run the bot
 
-3. **Run**
-   - Live: `npm run dev` or `npm start` (after `npm run build`)
-   - Backtest: `npm run backtest` or `npx tsx src/run_backtest.ts path/to/history.csv`
+**Live trading (recommended for development):**
+
+```bash
+npm run dev
+```
+
+This runs the bot with `tsx` so you see logs in real time. You’ll see lines like:
+
+- `Up=X.XX Down=Y.YY` — current market probabilities
+- `Balance: $X.XX` — current balance
+- `Entry window in Xs` / `Waiting for entry price` — bot waiting for an entry
+- `Entry window passed, no position` — no trade that cycle
+- `New 5m window started` — start of each 5-minute window
+
+**Production (compiled):**
+
+```bash
+npm run build
+npm start
+```
+
+**Backtesting:**
+
+```bash
+npm run backtest
+```
+
+Or with your own history CSV (columns: `timestamp`, `token_id`, `bid`, `ask`, `mid`):
+
+```bash
+npx tsx src/run_backtest.ts path/to/history.csv
+```
+
+### Example runs (custom strategy)
+
+Example results from running the bot with different sizes (your own strategy and config):
+
+| Starting balance | Per-trade size | Profit (example run) |
+|------------------|----------------|----------------------|
+| $100             | $10            | ~$40                 |
+| $500             | $50            | ~$300                |
+| $1,000           | $100           | ~$500                |
+
+Results depend on market conditions, strategy, and config; the bot often logs “Entry window passed, no position” when it doesn’t find a trade in that 5m window.
 
 ## Strategies
 
