@@ -11,13 +11,20 @@ import { createWriteStream } from "fs";
 import { ClobClient, AssetType } from "@polymarket/clob-client";
 import { Wallet } from "ethers";
 
-/** Check env from .env file. Exits if POLYMARKET_PRIVATE_KEY is not set. */
+/** Normalize and validate POLYMARKET_PRIVATE_KEY. Prepends 0x if missing. Exits if invalid. */
 function checkEnvConfig(): void {
-  const pk = process.env.POLYMARKET_PRIVATE_KEY?.trim();
-  if (!pk || !pk.startsWith("0x")) {
+  let pk = process.env.POLYMARKET_PRIVATE_KEY?.trim();
+  if (!pk) {
     console.error("POLYMARKET_PRIVATE_KEY is required. Set it in your .env file and try again.");
     process.exit(1);
   }
+  if (!pk.startsWith("0x")) pk = "0x" + pk;
+  const validHex64 = /^0x[0-9a-fA-F]{64}$/;
+  if (!validHex64.test(pk)) {
+    console.error("POLYMARKET_PRIVATE_KEY is invalid. It must be 64 hex characters (with or without 0x prefix). Fix it in your .env file and try again.");
+    process.exit(1);
+  }
+  process.env.POLYMARKET_PRIVATE_KEY = pk;
 }
 
 const LOG_FILE = "logs.txt";
@@ -234,6 +241,10 @@ async function main() {
     log(`  [INFO] Using default start balance $${DEFAULT_START_BALANCE}. Set POLYMARKET_PRIVATE_KEY in .env to use wallet balance.`);
   } else {
     log(`  [INFO] Wallet balance from CLOB: $${startBalance.toFixed(2)} USDC.`);
+  }
+  if (startBalance <= 0) {
+    console.error("Wallet balance is $0. Please deposit USDC and try again.");
+    process.exit(1);
   }
   const state = { balance: startBalance, startBalance, totalPnL: 0, tradeCount: 0, startTime };
   let position: Position | null = null;

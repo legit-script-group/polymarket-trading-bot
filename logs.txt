@@ -13411,3 +13411,29 @@
   [2026-03-17 07:13:06] t=186s  Up=0.95 Down=0.04  |  Balance: $99.10  |  Entry window passed, no position
   [2026-03-17 07:13:37] t=217s  Up=0.97 Down=0.02  |  Balance: $99.10  |  Entry window passed, no position
   [2026-03-17 07:14:08] t=248s  Up=0.99 Down=0.00  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:14:39] t=279s  Up=1.00 Down=0.00  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:15:00] New 5m window started. Balance: $99.10
+  [2026-03-17 07:15:16] t=16s  Up=0.49 Down=0.44  |  Balance: $99.10  |  Entry window in 9s
+  [2026-03-17 07:15:47] t=47s  Up=0.63 Down=0.36  |  Balance: $99.10  |  Waiting for entry price
+  [2026-03-17 07:16:18] t=78s  Up=0.68 Down=0.31  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:16:49] t=109s  Up=0.57 Down=0.42  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:17:20] t=140s  Up=0.75 Down=0.24  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:17:51] t=171s  Up=0.83 Down=0.15  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:18:22] t=202s  Up=0.65 Down=0.34  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:18:53] t=233s  Up=0.43 Down=0.56  |  Balance: $99.10  |  Entry window passed, no position
+  [INFO] Wallet balance from CLOB: $0.00 USDC.
+--- New-member strategy (5m BTC Up/Down) ---
+  Started at: 2026-03-17 07:19:03  |  BET_USD=10  START_BALANCE=$0.00
+  Starting balance: $0.00  (each trade: $10; fee: 1%)
+  Entry: time 25-71s, price 0.14-0.26
+  Exit:  time 47-267s (min 3s hold). Sell: limit-style (defer if bid < 85% entry); max 5 retries then force exit; force exit by t=265s.
+  Logging to logs.txt. Press Ctrl+C to stop and see final result.
+------------------------------------------
+
+  [2026-03-17 07:19:04] New 5m window started. Balance: $0.00
+
+==========================================
+  [2026-03-17 07:19:23] t=263s  Up=0.97 Down=0.02  |  Balance: $99.10  |  Entry window passed, no position
+  [2026-03-17 07:20:00] New 5m window started. Balance: $99.10
+  [2026-03-17 07:20:00] t=0s  Up=0.41 Down=0.54  |  Balance: $99.10  |  Entry window in 25s
+  [INFO] Wallet balance from CLOB: $0.00 USDC.
